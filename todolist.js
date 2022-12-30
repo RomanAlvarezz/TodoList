@@ -9,15 +9,40 @@ window.addEventListener('load', () => {
 
     nameInput.value = username;
 
+    nameInput.addEventListener('input', e => {
+        if(e.target.value.length > 10){
+            console.log('asd')
+            let errorPoster = document.createElement('p');
+            errorPoster.innerHTML = 'More than 10 characters are not accepted';
+            errorPoster.classList.add('error'); 
+            console.log(errorPoster)
+            e.target.parentElement.insertAdjacentElement('afterend', errorPoster);
+            setTimeout(()=>{
+                errorPoster.remove();
+            },1000)
+        }
+    })
+
     nameInput.addEventListener('change', e => {
         localStorage.setItem('username', e.target.value)
     })
 
     newTodoForm.addEventListener('submit', e => {
         e.preventDefault();
+        let content = e.target.elements.content.value.trim(); 
+
+        // if(content.length > 10){
+        //     console.log(content.length);
+        //     let errorPoster = document.createElement('p');
+        //     errorPoster.innerHTML = 'More than 10 characters are not accepted';
+        //     errorPoster.classList.add('error');
+        //     console.log(e.target.querySelector('#content'));
+        //      e.target.querySelector('#content').insertAdjacentElement('afterend', errorPoster);
+            
+        // }
 
         const todo = {
-            content: e.target.elements.content.value.trim(),
+            content: content,
             category: e.target.elements.category.value,
             done: false,
             createdAt: new Date().getTime()
