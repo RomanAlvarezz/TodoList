@@ -11,15 +11,7 @@ window.addEventListener('load', () => {
 
     nameInput.addEventListener('input', e => {
         if(e.target.value.length > 10){
-            console.log('asd')
-            let errorPoster = document.createElement('p');
-            errorPoster.innerHTML = 'More than 10 characters are not accepted';
-            errorPoster.classList.add('error'); 
-            console.log(errorPoster)
-            e.target.parentElement.insertAdjacentElement('afterend', errorPoster);
-            setTimeout(()=>{
-                errorPoster.remove();
-            },1000)
+            validation(e.target.parentElement)           
         }
     })
 
@@ -31,15 +23,10 @@ window.addEventListener('load', () => {
         e.preventDefault();
         let content = e.target.elements.content.value.trim(); 
 
-        // if(content.length > 10){
-        //     console.log(content.length);
-        //     let errorPoster = document.createElement('p');
-        //     errorPoster.innerHTML = 'More than 10 characters are not accepted';
-        //     errorPoster.classList.add('error');
-        //     console.log(e.target.querySelector('#content'));
-        //      e.target.querySelector('#content').insertAdjacentElement('afterend', errorPoster);
-            
-        // }
+        if(content.length > 25){
+            validation(e.target.querySelector('input[type="text"]'));
+            return;
+        }
 
         const todo = {
             content: content,
@@ -168,4 +155,14 @@ function asignEvents(){
         }
     });
 
+}
+
+function validation(reference){
+    let errorPoster = document.createElement('p');
+        errorPoster.innerHTML = 'More than 10 characters are not accepted';
+        errorPoster.classList.add('error');
+        reference.insertAdjacentElement('afterend', errorPoster);
+        setTimeout(()=>{
+            errorPoster.remove();
+        },1000)
 }
